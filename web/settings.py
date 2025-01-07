@@ -26,8 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Home app definition for home app settings
+
+    # Define installed applications in the main settings
+    # تمامی app هایی که نصب میشوند باید در settings در این بخش معرفی شوند
     'home.apps.HomeConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [

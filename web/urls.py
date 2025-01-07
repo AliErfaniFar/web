@@ -13,4 +13,7 @@ urlpatterns = [
 
     # Introduction of home application and home urls
     path('', include('home.urls'), name='home'),
+
+    # Introduction of accounts application and accounts urls
+    path('', include('accounts.urls'), name='accounts'),
 ]
