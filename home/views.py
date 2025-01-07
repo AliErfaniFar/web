@@ -1,5 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
+
+# The view related to the home page
 def home(request):
-    return HttpResponse("Hello, world. You're at the polls page.")
+    return render(request, 'home/home.html') # received the home.html page and in response to displays request
