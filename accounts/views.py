@@ -19,7 +19,6 @@ def Registration(request):
         form = RegisterForm()
 
     context = {'form': form}
-
     return render(request, 'accounts/registration.html', context)
 
 def Login(request):
