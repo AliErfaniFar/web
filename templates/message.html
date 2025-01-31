@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Alert Notifications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <style>
+        /* استایل‌های کلی و انیمیشن‌ها */
+        .notification-alert .alert {
+            padding: 20px 40px;
+            min-width: 420px;
+            position: fixed;
+            right: 0;
+            top: 10px;
+            border-radius: 4px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            border-left: 8px solid;
+        }
+
+        .notification-alert .alert.showAlert {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .notification-alert .alert.show {
+            animation: show_slide 1s ease forwards;
+        }
+
+        @keyframes show_slide {
+            0% {
+                transform: translateX(100%);
+            }
+            40% {
+                transform: translateX(-10%);
+            }
+            80% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(-10px);
+            }
+        }
+
+        .notification-alert .alert.hide {
+            animation: hide_slide 1s ease forwards;
+        }
+
+        @keyframes hide_slide {
+            0% {
+                transform: translateX(-10px);
+            }
+            40% {
+                transform: translateX(0%);
+            }
+            80% {
+                transform: translateX(-10%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .notification-alert .alert .fa-exclamation-circle {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+        }
+
+        .notification-alert .alert .msg {
+            padding: 0 20px;
+            font-size: 18px;
+        }
+
+        .notification-alert .alert .close-btn {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px 18px;
+            cursor: pointer;
+        }
+
+        .notification-alert .alert .close-btn:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .notification-alert .alert .close-btn .fas {
+            font-size: 22px;
+            line-height: 40px;
+        }
+
+        /* رنگ‌های متفاوت برای هر نوع پیام */
+        .notification-alert .alert.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+
+        .notification-alert .alert.error .fa-exclamation-circle,
+        .notification-alert .alert.error .msg {
+            color: #dc3545;
+        }
+
+        .notification-alert .alert.warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        .notification-alert .alert.warning .fa-exclamation-circle,
+        .notification-alert .alert.warning .msg {
+            color: #ffc107;
+        }
+
+        .notification-alert .alert.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .notification-alert .alert.success .fa-exclamation-circle,
+        .notification-alert .alert.success .msg {
+            color: #28a745;
+        }
+
+        .notification-alert .alert.info {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+        }
+
+        .notification-alert .alert.info .fa-exclamation-circle,
+        .notification-alert .alert.info .msg {
+            color: #17a2b8;
+        }
+
+        .notification-alert .alert.primary {
+            background: #cce5ff;
+            border-left-color: #007bff;
+        }
+
+        .notification-alert .alert.primary .fa-exclamation-circle,
+        .notification-alert .alert.primary .msg {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-alert">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert hide {{ msg.tags }}">
+                    <span class="fas fa-exclamation-circle"></span>
+                    <span class="msg">{{ msg }}</span>
+                    <div class="close-btn">
+                        <span class="fas fa-times"></span>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('.notification-alert .alert').addClass("show");
+            $('.notification-alert .alert').removeClass("hide");
+            $('.notification-alert .alert').addClass("showAlert");
+            setTimeout(function() {
+                $('.notification-alert .alert').removeClass("show");
+                $('.notification-alert .alert').addClass("hide");
+            }, 5000);
+
+            $('.notification-alert .close-btn').click(function() {
+                $(this).closest('.alert').removeClass("show");
+                $(this).closest('.alert').addClass("hide");
+            });
+        });
+    </script>
+</body>
+</html>

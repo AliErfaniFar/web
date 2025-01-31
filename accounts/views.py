@@ -2,19 +2,22 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 def Registration(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            User.objects.create_user(username=data['username'],
-                                     email=data['email'],
-                                     password=data['password'],
-                                     first_name=data['first_name'],
-                                     last_name=data['last_name'])
+            User.objects.create_user(
+                username=data['username'],
+                email=data['email'],
+                password=data['password'],
+                first_name=data['first_name'],
+                last_name=data['last_name']
+            )
+            messages.success(request, 'Registration Successful!', extra_tags='success')
             return redirect('home:home')
-
     else:
         form = RegisterForm()
 
@@ -26,18 +29,20 @@ def Login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            try:
-                user = authenticate(request, username=data['username'], password=data['password'])
-            except:
-                user = authenticate(request, username=User.objects.get(email=data['user']), password=data['password'])
+            user = authenticate(request, username=data['username'], password=data['password'])
             if user is not None:
                 login(request, user)
+                messages.success(request, 'Login Successful!', extra_tags='success')
                 return redirect('home:home')
+            else:
+                messages.error(request, 'Login Failed!', extra_tags='danger')
     else:
-        form = LoginForm(request.POST)
+        form = LoginForm()
+
     context = {'form': form}
     return render(request, "accounts/login.html", context)
 
 def Logout(request):
     logout(request)
+    messages.success(request, 'Logout Successful!', extra_tags='primary')
     return redirect('home:home')
