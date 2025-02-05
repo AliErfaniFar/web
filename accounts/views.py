@@ -46,3 +46,6 @@ def Logout(request):
     logout(request)
     messages.success(request, 'Logout Successful!', extra_tags='primary')
     return redirect('home:home')
+
+def Profile(request):
+    return render(request, 'accounts/profile.html')
