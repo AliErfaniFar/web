@@ -3,6 +3,7 @@ from .forms import RegisterForm, LoginForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import Profile
 
 def Registration(request):
     if request.method == 'POST':
@@ -47,5 +48,6 @@ def Logout(request):
     messages.success(request, 'Logout Successful!', extra_tags='primary')
     return redirect('home:home')
 
-def Profile(request):
-    return render(request, 'accounts/profile.html')
+def User_Profile(request):
+    profile = Profile.objects.get(user_id=request.user.id)
+    return render(request, 'accounts/profile.html', {'profile': profile})
