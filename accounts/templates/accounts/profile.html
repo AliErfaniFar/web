@@ -3,67 +3,87 @@
     <title>Profile</title>
     <style>
         .gradient-custom {
-            /* fallback for old browsers */
-            background: #022761;
-
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: -webkit-linear-gradient(to right bottom, rgb(2, 39, 97), rgb(65, 128, 246));
-
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background: linear-gradient(to right bottom, rgb(2, 39, 97), rgb(65, 128, 246))
+            background: #2B2E4A;
+            backdrop-filter: blur(50px);
+        }
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .col-md-4 {
+                border-radius: .5rem .5rem 0 0 !important;
             }
+            .col-md-8 {
+                border-radius: 0 0 .5rem .5rem !important;
+            }
+            .profile-img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        .profile-container {
+            height: 100vh;
+            overflow-y: auto;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col col-lg-6 mb-4 mb-lg-0" style="width: 900px; padding-top: 45px">
+<div class="container py-5 profile-container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-8 col-xl-6" style="width: 75%">
             <div class="card mb-3" style="border-radius: .5rem;">
-              <div class="row g-0">
-                <div class="col-md-4 gradient-custom text-center text-white"
-                  style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                  {% if profile.gender == 'Male' %}
-                      <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
-                        alt="Avatar" class="img-fluid my-5" style="width: 100px;" />
-                      {% else %}
-                        <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359554_1280.png"
-                            alt="Avatar" class="img-fluid my-5" style="width: 100px;" />
-                  {% endif %}
-                  <h5>{{ profile.user.username }}</h5>
-                  <p>{{ profile.user.first_name }}
-                      {{ profile.user.last_name }}</p>
-                  <i class="far fa-edit mb-5"></i>
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body p-4">
-                    <h3>Profile</h3>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                      <div class="col-6 mb-3">
-                        <h6>Email</h6>
-                        <p class="text-muted">{{ profile.user.email }}</p>
-                      </div>
-                      <div class="col-6 mb-3">
-                        <h6>Phone</h6>
-                        <p class="text-muted">{{ profile.phone }}</p>
-                      </div>
+                <div class="row g-0">
+                    <div class="col-md-4 gradient-custom text-center text-white"
+                        style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem; padding-top: 60px">
+                        {% if profile.gender == 'Male' %}
+                            <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png"
+                                alt="Avatar" class="img-fluid profile-img" />
+                        {% else %}
+                            <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359554_1280.png"
+                                alt="Avatar" class="img-fluid profile-img" />
+                        {% endif %}
+                        <h5>{{ profile.user.username }}</h5>
+                        <p>{{ profile.user.first_name }} {{ profile.user.last_name }}</p>
+                        <i class="far fa-edit mb-5"></i>
                     </div>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                      <div class="col-6 mb-3">
-                        <h6>Postal Code</h6>
-                        <p class="text-muted">{{ profile.postal_code }}</p>
-                      </div>
-                      <div class="col-6 mb-3">
-                        <h6>Address</h6>
-                        <p class="text-muted">{{ profile.address }}</p>
-                      </div>
-                  </div>
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <h3>Profile</h3>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <h6>Email</h6>
+                                    <p class="text-muted">{{ profile.user.email }}</p>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <h6>Phone</h6>
+                                    <p class="text-muted">{{ profile.phone }}</p>
+                                </div>
+                            </div>
+                            <hr class="mt-0 mb-4">
+                            <div class="row pt-1">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <h6>Postal Code</h6>
+                                    <p class="text-muted">{{ profile.postal_code }}</p>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <h6>Address</h6>
+                                    <p class="text-muted">{{ profile.address }}</p>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <h6>Gender</h6>
+                                    <p class="text-muted">{{ profile.gender }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 {% endblock %}
