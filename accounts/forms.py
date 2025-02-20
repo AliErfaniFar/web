@@ -1,16 +1,15 @@
 from django import forms
 from django.contrib.auth.models import User
 import re
+from .models import *
 
-# All our forms are a class
 class RegisterForm(forms.Form):
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    username = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    password = forms.CharField(max_length=10, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(max_length=10, widget=forms.PasswordInput)
-
+    first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
+    username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    confirm_password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -26,9 +25,9 @@ class RegisterForm(forms.Form):
 
     def clean_confirm_password(self):
         password = self.cleaned_data['password']
-        password2 = self.cleaned_data['confirm_password']
+        confirm_password = self.cleaned_data['confirm_password']
 
-        if password != password2:
+        if password != confirm_password:
             raise forms.ValidationError("تکرار رمز عبور اشتباه است")
 
         if len(password) < 8:
@@ -43,8 +42,25 @@ class RegisterForm(forms.Form):
         if not re.findall('[!@#$%^&*(),.?":{}|<>]', password):
             raise forms.ValidationError("رمز عبور باید حداقل شامل یک کاراکتر خاص باشد")
 
-        return password
+        return confirm_password
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(max_length=10, widget=forms.PasswordInput)
+
+
+class UpdateRegForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateRegForm, self).__init__(*args, **kwargs)
+        self.fields['username'].disabled = True
+
+
+class UpdateProfForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['gender', 'address', 'phone', 'postal_code']
+

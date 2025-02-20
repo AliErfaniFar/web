@@ -10,4 +10,5 @@ urlpatterns = [
     path('login', views.Login, name='login'),
     path('logout', views.Logout, name='logout'),
     path('profile', views.User_Profile, name='profile'),
+    path('update-profile', views.Update_Profile, name='update-profile'),
 ]

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     # تمامی app هایی که نصب میشوند باید در settings در این بخش معرفی شوند
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
+    'phone_field'
 ]
 
 MIDDLEWARE = [

@@ -21,19 +21,16 @@
           left: 250px;
           width: calc(100% - 250px);
         }
-        .home-section .block-body{
-            padding-left: 15px;
-            padding-top: 10px;
 
-        }
     </style>
     {% block head %}{% endblock %}
 </head>
 <body>
 {% include 'navbar.html' %}
-{% include 'message.html' %}
+
     <section class="home-section" id="home-section">
         <div class="block-body">
+            {% include 'message.html' %}
             {% block body %}{% endblock %}
         </div>
     </section>
