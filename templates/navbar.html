@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <title>Responsive Sidebar Menu</title>
-    <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -15,7 +14,7 @@
         font-family: "Poppins", sans-serif;
       }
       body, html {
-        overflow: hidden; /* مخفی کردن اسکرول‌بار در کل صفحه */
+        overflow: hidden;
       }
       .sidebar {
         position: fixed;
@@ -27,11 +26,10 @@
         padding: 6px 14px;
         z-index: 99;
         transition: all 0.5s ease;
-        overflow-y: auto; /* فعال کردن اسکرول در سایدبار */
+        overflow-y: auto;
       }
-      /* مخفی کردن اسکرول‌بار در سایدبار */
       .sidebar::-webkit-scrollbar {
-        width: 0; /* مخفی کردن اسکرول‌بار در مرورگرهای مبتنی بر WebKit */
+        width: 0;
       }
       .sidebar.open {
         width: 250px;
@@ -45,6 +43,10 @@
       .sidebar .logo-details .icon {
         opacity: 0;
         transition: all 0.5s ease;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+        margin-left: 5px;
       }
       .sidebar .logo-details .logo_name {
         color: #fff;
@@ -52,6 +54,7 @@
         font-weight: 600;
         opacity: 0;
         transition: all 0.5s ease;
+        margin-left: -7px;
       }
       .sidebar.open .logo-details .icon,
       .sidebar.open .logo-details .logo_name {
@@ -265,8 +268,8 @@
   <body>
     <div class="sidebar">
       <div class="logo-details">
-        <i class='bx bxl-c-plus-plus icon'></i>
-        <div class="logo_name">CodingLab</div>
+        <img src="https://img.icons8.com/?size=100&id=BwqpJWD0tLbt&format=png&color=FFFFFF" alt="Logo" class="icon">
+        <div class="logo_name">OnlineShope</div>
         <i class='bx bx-menu' id="btn"></i>
       </div>
       <ul class="nav-list">
@@ -329,7 +332,7 @@
         <li class="profile">
           <div class="profile-details">
             <div class="name_job">
-              <div class="name">{% if user.is_authenticated %}{{ user.username }}{% else %}Guest{% endif %}</div>
+              <div class="name">{% if user.is_authenticated %}{{ user.username }}{% else %}Login{% endif %}</div>
             </div>
           </div>
           {% if user.is_authenticated %}

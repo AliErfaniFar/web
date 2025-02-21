@@ -8,8 +8,8 @@ class RegisterForm(forms.Form):
     last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
     username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
-    confirm_password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+    password = forms.CharField(max_length=10, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    confirm_password = forms.CharField(max_length=10, widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -63,4 +63,29 @@ class UpdateProfForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['gender', 'address', 'phone', 'postal_code']
+
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput)
+    new_password1 = forms.CharField(widget=forms.PasswordInput)
+    new_password2 = forms.CharField(widget=forms.PasswordInput)
+
+    def clean_new_password1(self):
+        password = self.cleaned_data.get('new_password1')
+        if not re.findall('[A-Z]', password):
+            raise forms.ValidationError("رمز عبور باید حداقل شامل یک حرف بزرگ باشد")
+        if not re.findall('[0-9]', password):
+            raise forms.ValidationError("رمز عبور باید حداقل شامل یک عدد باشد")
+        if not re.findall('[!@#$%^&*(),.?":{}|<>]', password):
+            raise forms.ValidationError("رمز عبور باید حداقل شامل یک کاراکتر خاص باشد")
+        return password
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError("رمزهای عبور جدید مطابقت ندارند")
+        return cleaned_data
 

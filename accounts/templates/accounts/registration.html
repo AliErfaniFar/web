@@ -25,8 +25,8 @@
             left: 50%;
             z-index: 999;
             text-align: center;
-            padding: 60px 32px;
-            width: 370px;
+            padding: 15px 32px;
+            width: 400px;
             transform: translate(-50%,-50%);
             background: rgba(255,255,255,0.04);
             box-shadow: -1px 4px 28px 0px rgba(0,0,0,0.75);
@@ -35,7 +35,7 @@
             color: white;
             font-size: 33px;
             font-weight: 600;
-            margin: 0 0 35px 0;
+            margin: 0 0 10px 0;
             font-family: 'Montserrat',sans-serif;
         }
         .field {
@@ -62,19 +62,6 @@
         }
         .space {
             margin-top: 16px;
-        }
-        .show {
-            position: absolute;
-            right: 13px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #222;
-            display: none;
-            cursor: pointer;
-            font-family: 'Montserrat',sans-serif;
-        }
-        .pass-key:valid ~ .show {
-            display: block;
         }
         .field button {
             background: #3498db;
@@ -115,7 +102,7 @@
 {% block body %}
     <div class="bg-img">
         <div class="content">
-            <header>Registration Form</header>
+            <header>Registration</header>
             <form method="post">
                 {% csrf_token %}
                 <div class="field">
@@ -136,16 +123,14 @@
                 </div>
                 <div class="field space">
                     <span class="fa fa-lock"></span>
-                    <input type="password" name="password" class="pass-key" required placeholder="Password">
-                    <span class="show">SHOW</span>
+                    <input type="password" name="password" class="pass-key" required placeholder="Password" maxlength="10">
                 </div>
                 <div class="field space">
                     <span class="fa fa-lock"></span>
-                    <input type="password" name="confirm_password" class="pass-key" required placeholder="Confirm Password">
-                    <span class="show">SHOW</span>
+                    <input type="password" name="confirm_password" class="pass-key" required placeholder="Confirm Password" maxlength="10">
                 </div>
                 {% if form.errors %}
-                    <div class="error">
+                    <div class="error" id="error-messages">
                         {% for field, errors in form.errors.items %}
                             {% for error in errors %}
                                 {{ error }}<br>
@@ -164,20 +149,11 @@
         </div>
     </div>
     <script>
-        const pass_field = document.querySelectorAll('.pass-key');
-        const showBtn = document.querySelectorAll('.show');
-        showBtn.forEach((btn, index) => {
-            btn.addEventListener('click', function(){
-                if(pass_field[index].type === "password"){
-                    pass_field[index].type = "text";
-                    btn.textContent = "HIDE";
-                    btn.style.color = "#3498db";
-                }else{
-                    pass_field[index].type = "password";
-                    btn.textContent = "SHOW";
-                    btn.style.color = "#222";
-                }
-            });
-        });
+        setTimeout(function() {
+            var errorMessages = document.getElementById('error-messages');
+            if (errorMessages) {
+                errorMessages.style.display = 'none';
+            }
+        }, 5000);
     </script>
 {% endblock %}
